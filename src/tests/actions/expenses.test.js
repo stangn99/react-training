@@ -1,61 +1,40 @@
-import { addExpense, editExpense, removeExpense } from '../../actions/expenses';
+import { addExpense, removeExpense, editExpense } from '../../actions/expenses';
 
-test("Should setup remove expense action object", () => {
-  const action = removeExpense({id : '123abc'});
-  expect(action).toEqual({
+test("Should setup removeExpense action object", () => {
+  const result = removeExpense({id: 'abc123'});
+  expect(result).toEqual({
     type: 'REMOVE_EXPENSE',
-    id: '123abc'
+    id: 'abc123'
   })
 })
 
-
-test("Should setup edit expense action object", () => {
-  const action = editExpense('123abc', {note: 'new note'});
-  expect(action).toEqual({
-    type: 'EDIT_EXPENSE', 
-    id: '123abc', 
+test("Should setup editExpense action object", () => {
+  const result = editExpense('abc123', {note: 'This is a new note'});
+  expect(result).toEqual({
+    type: 'EDIT_EXPENSE',
+    id: 'abc123',
     updates: {
-      note: 'new note'
+      note: 'This is a new note'
     }
   })
 })
 
-
-test("Show setup add expense action object with provided values", () => {
-  const expenseData = {
-    description: 'Rent',
-    note: 'Last months rent', 
-    amount: '109500', 
-    createdAt: 10000
+test("Should add a new expense with provided values", () => {
+  const expenseValues = {
+    description: 'This is a new expense', 
+    amount: 10000, 
+    createdAt: 1900,
+    note: 'Rent'
   }
-  const action = addExpense(expenseData);
-
-  expect(action).toEqual({
-    type: 'ADD_EXPENSE', 
-    expense: {
-      id: expect.any(String),
-      ...expenseData
-    }
-  })
-})
-
-
-test("Show setup add expense action object with default values", () => {
-  const defaultExpenseDate = {
-    description: '',
-    note: '', 
-    amount: 0, 
-    createdAt: 0
-  }
-
-  const action = addExpense();
-  expect(action).toEqual({
+  const result = addExpense(expenseValues);
+  expect(result).toEqual({
     type: 'ADD_EXPENSE',
     expense: {
       id: expect.any(String),
-      ...defaultExpenseDate
+      description: 'This is a new expense', 
+      amount: 10000, 
+      createdAt: 1900,
+      note: 'Rent'      
     }
   })
 })
-
-
