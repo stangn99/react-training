@@ -38,3 +38,17 @@ test("Should add a new expense with provided values", () => {
     }
   })
 })
+
+test("No values", () => {
+  const result = addExpense();
+  expect(result).toEqual({
+    type: 'ADD_EXPENSE',
+    expense: {
+      id: expect.any(String),
+      description : '',
+      note : '',
+      amount : 0,
+      createdAt : 0
+    }
+  })
+})
