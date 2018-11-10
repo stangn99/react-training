@@ -1,54 +1,51 @@
-import { addExpense, removeExpense, editExpense } from '../../actions/expenses';
+import { addExpense, editExpense, removeExpense } from '../../actions/expenses';
 
-test("Should setup removeExpense action object", () => {
-  const result = removeExpense({id: 'abc123'});
-  expect(result).toEqual({
+test('should setup remove expense action object', () => {
+  const action = removeExpense({ id: '123abc' });
+  expect(action).toEqual({
     type: 'REMOVE_EXPENSE',
-    id: 'abc123'
-  })
-})
+    id: '123abc'
+  });
+});
 
-test("Should setup editExpense action object", () => {
-  const result = editExpense('abc123', {note: 'This is a new note'});
-  expect(result).toEqual({
+test('should setup edit expense action object', () => {
+  const action = editExpense('123abc', { note: 'New note value' });
+  expect(action).toEqual({
     type: 'EDIT_EXPENSE',
-    id: 'abc123',
+    id: '123abc',
     updates: {
-      note: 'This is a new note'
+      note: 'New note value'
     }
-  })
-})
+  });
+});
 
-test("Should add a new expense with provided values", () => {
-  const expenseValues = {
-    description: 'This is a new expense', 
-    amount: 10000, 
-    createdAt: 1900,
-    note: 'Rent'
-  }
-  const result = addExpense(expenseValues);
-  expect(result).toEqual({
+test('should setup add expense action object with provided values', () => {
+  const expenseData = {
+    description: 'Rent',
+    amount: 109500,
+    createdAt: 1000,
+    note: 'This was last months rent'
+  };
+  const action = addExpense(expenseData);
+  expect(action).toEqual({
+    type: 'ADD_EXPENSE',
+    expense: {
+      ...expenseData,
+      id: expect.any(String)
+    }
+  });
+});
+
+test('should setup add expense action object with default values', () => {
+  const action = addExpense();
+  expect(action).toEqual({
     type: 'ADD_EXPENSE',
     expense: {
       id: expect.any(String),
-      description: 'This is a new expense', 
-      amount: 10000, 
-      createdAt: 1900,
-      note: 'Rent'      
+      description: '',
+      note: '',
+      amount: 0,
+      createdAt: 0
     }
-  })
-})
-
-test("No values", () => {
-  const result = addExpense();
-  expect(result).toEqual({
-    type: 'ADD_EXPENSE',
-    expense: {
-      id: expect.any(String),
-      description : '',
-      note : '',
-      amount : 0,
-      createdAt : 0
-    }
-  })
-})
+  });
+});
